@@ -1,0 +1,121 @@
+program revista;
+type
+    equipos=1..28;
+    fechas = 1..27;
+    calificacion=0..10;
+
+    jugador=record
+        codigoJugador:integer;
+        ApeyNom:string;
+        codigoEquipo:equipos;
+        AnioNaci:integer;
+        calificacion:vector_fechas; //calificacion del 0 al 10 en las 27 fechas
+    end;
+
+vector_fechas=array [fechas] of integer;    //calificacion del 0 al 10 en las 27 fechas
+vector_equipos=array[equipos] of integer;
+
+//calificacion del 0 al 10 en las 27 fechas
+    calificaciones  = record
+        codigoJugador:integer;
+        vector_fechas:array [fechas] of calificacion;
+    end;
+
+    lista = ^nodo
+    nodo=record
+        dato:jugador;
+        sig:lista;
+    end;
+
+procedure crear_lista(var l:lista); //se dispone
+procedure insertar_ordenado(var l2:lista, j:jugador);
+var
+    nue, act, ant:lista;
+begin
+    new(nue);
+    nue^.dato:=j;
+    act:=l2;
+    ant:=l2;
+    while (act<>nil) and (act^.dato.codigoJugador < j.codigoJugador) do begin
+        ant:=act;
+        act:=act^.sig;
+    end;
+    if (ant=act) then
+        l2:=nue
+    else
+        ant^.sig:=nue;
+    nue^.sig:=act;
+end;
+    //el promedio del jugador y debe devolver los 2 jugadores con mejor promedio de los partidos que jugo solo si jug mas de 14 partidos
+
+procedure cumpleJugadorCalificacion(vf:vector_fechas, j:jugador, var promedio:real);
+var
+    i:fechas;
+    cantJugados:integer;
+    cantCalificaciones:real;
+begin
+    for i := 1 to 27 do begin
+        if (vf[i]>0) then begin
+            cantJugados:=cantJugados+1;
+            cantCalificaciones:=cantCalificaciones+j.calificacion.vf[i];
+        end;
+    end;
+    if (cantJugados>14) then begin  //si jugo mas de 14 partidos
+        promedio:=cantCalificaciones/cantJugados;
+    if (promedio > maxCali1) then begin
+        maxCali2:=maxCali1;
+        maxCali1:=promedio;
+        cod2:=cod1;
+        cod1:=j.codigoJugador;
+    end
+    else
+        if (promedio > maxCali2) then begin
+            maxCali2:=promedio;
+            cod2:=j.codigoJugador;
+        end;
+end;
+
+function codigoCumple(cod:integer):boolean;
+var
+    impares:integer;
+begin
+    impares:=0;
+    cod mod 10;
+    while (cod<>0) do begin
+        if (cod mod 10 mod 2 <> 0) then
+        
+            impares:=impares+1;
+    end;
+    if (impares>3) then
+        codigoCumple:=true
+    else
+        codigoCumple:=false;
+end;
+
+procedure recorrido(l:lista);
+var
+    i, cant35:integer;
+    cod1, cod2:integer;
+    ve:vector_equipos;
+    maxCali1, maxCali2:real;
+begin
+    ld:=l^.dato;
+
+    while (l<>nil) do begin
+    ////mayor de 35 años
+        if((2024-ld.anioNaci) > 35) then
+            ve[ld.codigoEquipo]:=ve[ld.codigoEquipo]+1; ///sumo al vector de equipo que tiene mayores de 35
+        //2 jugadores con mejor promedio de los partidos que jugo solo si jug mas de 14 partidos
+        if (cumpleJugadorCalificacion(L^.dato.calificacion, L^.dato, promedio);
+            writeln('el con mejor promedio es: ', cod1, ' con ', maxCali1);
+        l:=l^.sig;
+    end;
+    for i:= 1 to 28 do begin
+        writeln('El equipo ', i, ' tiene ', ve[i], ' jugadores mayores de 35 años');
+    end;    
+    if (codigoCumple(l^.dato.cod) and (nacimientoCumple(l^.dato.anioNaci)) then
+        insertar_ordenado(l2, l^.dato);
+end.    
+
+    
+
